@@ -1,0 +1,28 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: "task-tracker-web"
+  labels:
+    tier: "backend"
+    env: "dev"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      env: "dev"
+      tier: "frontend"
+      type: "web"
+  template:
+    metadata:
+      name: web-pod
+      labels:
+        env: "dev"
+        tier: "frontend"
+        type: "web"
+    spec:
+      containers:
+        - name: "web-container"
+          image: "jyotimanab/task-tracker-web:latest" 
+          ports:
+            - containerPort: 80 
+              name: "dev-web-port"  

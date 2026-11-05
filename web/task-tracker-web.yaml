@@ -31,8 +31,8 @@ spec:
             - name: nginx-config-volume
               mountPath: /etc/nginx/conf.d/task-tracker.conf
               subPath: task-tracker.conf
-      volume:
+      volumes:
         - name: nginx-config-volume
           configMap:
-            name: nginx-Config      
+            name: nginx-config      
 

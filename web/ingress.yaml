@@ -4,6 +4,7 @@ kind: Ingress
 
 metadata:
   name: task-tracker-ingress
+  namespace: dev
 
 spec:
   ingressClassName: nginx

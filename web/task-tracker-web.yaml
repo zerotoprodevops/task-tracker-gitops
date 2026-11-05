@@ -27,3 +27,12 @@ spec:
           ports:
             - containerPort: 80 
               name: "dev-web-port"  
+          volumeMounts:
+            - name: nginx-config-volume
+              mountPath: /etc/nginx/conf.d/task-tracker.conf
+              subPath: task-tracker.conf
+      volume:
+        - name: nginx-config-volume
+          configMap:
+            name: nginx-Config      
+

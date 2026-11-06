@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: db-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    type: deployment
+    use: db
+    env: {{ .Values.env }}
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: mongoDB
+      env: {{ .Values.env }}
+  template:
+    metadata:
+      name: mongo-db
+      labels:
+        type: mongoDB
+        env: {{ .Values.env }}
+    spec:    
+      containers:
+        - name: mongo-db-container
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+              name: "{{ .Values.env }}-db-port"
+          volumeMounts:
+            - name: "mongo-Data-Storage"
+              mountPath: "/data/db"
+      volumes:
+        - name: "mongo-Data-Storage"
+          persistentVolumeClaim:
+            claimName: "{{ .Values.env }}-db-pvc-01"      
+---
+#create service for MongoDB
+apiVersion: v1
+
+kind: Service
+
+metadata:
+  name: mongo-service
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: db-svc-Port
+      protocol: TCP
+      port: 27017
+      targetPort: "{{ .Values.env }}-db-port"
+  selector:
+    type: mongoDB
+    env: {{ .Values.env }}
+
+
+
+
+---
+#create PV
+apiVersion: v1 
+
+kind: PersistentVolume  
+
+metadata:
+  name:  "{{ .Values.env }}-db-pv-vol-01"
+  labels:
+    release: "stable"
+    environment: {{ .Values.env }}
+
+spec:
+  capacity:
+    storage:  1Gi
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: slow-local
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/data/{{ .Values.env }}-mongo-db-vol-01"
+    type: DirectoryOrCreate    
+
+# Create PVC
+---
+apiVersion: v1
+kind: PersistentVolumeClaim 
+metadata:
+  name: "{{ .Values.env }}-db-pvc-01"
+  namespace: {{ .Values.namespace }}
+spec:  
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.mongo.storage }}
+  storageClassName: slow-local
+  

@@ -4,12 +4,12 @@ kind: Ingress
 
 metadata:
   name: task-tracker-ingress
-  namespace: dev
+  namespace: {{ .Values.namespace }}
 
 spec:
   ingressClassName: nginx
   rules:
-    - host: test-tracker.com
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
           - pathType: Prefix

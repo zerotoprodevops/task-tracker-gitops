@@ -2,28 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata: 
   name: task-tracker-api
-  namespace: dev
+  namespace: {{ .Values.namespace }}
   labels:
     tier: "backend"
-    env: "dev"
+    env: {{ .Values.env }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.api.replicas }}
   selector:
     matchLabels:
       tier: "backend"
       type: "api"
-      env: "dev"
+      env: {{ .Values.env }}
   template:
     metadata:
       name: api-pod
       labels:
-        env: "dev"
+        env: {{ .Values.env }}
         tier: "backend"
         type: "api"
     spec:
       containers:
         - name: api-container
-          image: "jyotimanab/task-tracker-api:latest"
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
           ports:
             - containerPort: 5000
-              name: "dev-api-port"
+              name: "{{ .Values.env }}-api-port"

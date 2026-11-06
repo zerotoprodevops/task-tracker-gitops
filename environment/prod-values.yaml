@@ -1,0 +1,19 @@
+namespace: prod
+env: prod
+web: 
+  replicas: 2
+  image:
+    repository: jyotimanab/task-tracker-web
+    tag: latest
+api: 
+  replicas: 1
+  image:
+    repository: jyotimanab/task-tracker-api
+    tag: latest 
+
+mongo:  
+  replicas: 1
+  storage: 1Gi
+  
+ingress:
+  host: prod.tracker.com  

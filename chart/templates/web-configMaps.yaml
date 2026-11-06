@@ -4,6 +4,7 @@ kind: ConfigMap
 
 metadata:
   name: nginx-config
+  namespace: {{ .Values.namespace }}
 
 data:
   task-tracker.conf: |

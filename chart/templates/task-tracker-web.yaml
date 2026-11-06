@@ -24,6 +24,12 @@ spec:
       containers:
         - name: "web-container"
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}" 
+
+           # --- ADD THESE TWO LINES ---
+          command: ["/bin/sh", "-c"]
+          args: ["rm -f /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+          # ---------------------------
+          
           ports:
             - containerPort: 80 
               name: "{{ .Values.env }}-web-port"  

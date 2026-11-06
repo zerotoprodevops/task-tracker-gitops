@@ -16,4 +16,4 @@ mongo:
   storage: 1Gi
   
 ingress:
-  host: test.tracker.com  
+  host: test-tracker.com  

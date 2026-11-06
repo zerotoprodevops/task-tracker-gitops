@@ -30,10 +30,10 @@ spec:
             - containerPort: 27017
               name: "{{ .Values.env }}-db-port"
           volumeMounts:
-            - name: "mongo-Data-Storage"
+            - name: "mongo-data-storage"
               mountPath: "/data/db"
       volumes:
-        - name: "mongo-Data-Storage"
+        - name: "mongo-data-storage"
           persistentVolumeClaim:
             claimName: "{{ .Values.env }}-db-pvc-01"      
 ---

@@ -9,7 +9,7 @@ api:
   replicas: 1
   image:
     repository: jyotimanab/task-tracker-api
-    tag: "13"
+    tag: "14"
 mongo:
   replicas: 1
   storage: 1Gi

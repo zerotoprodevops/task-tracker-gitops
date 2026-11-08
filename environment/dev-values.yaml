@@ -4,7 +4,7 @@ web:
   replicas: 1
   image:
     repository: jyotimanab/task-tracker-web
-    tag: "30"
+    tag: "31"
 api:
   replicas: 1
   image:

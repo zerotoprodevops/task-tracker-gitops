@@ -1,19 +1,17 @@
 namespace: dev
 env: dev
-web: 
+web:
   replicas: 1
   image:
     repository: jyotimanab/task-tracker-web
-    tag: latest
-api: 
+    tag: "31"
+api:
   replicas: 1
   image:
     repository: jyotimanab/task-tracker-api
-    tag: latest 
-
-mongo:  
+    tag: "16"
+mongo:
   replicas: 1
   storage: 1Gi
-  
 ingress:
-  host: test-tracker.com  
+  host: test-tracker.com

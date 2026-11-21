@@ -27,3 +27,18 @@ spec:
           ports:
             - containerPort: 5000
               name: "{{ .Values.env }}-api-port"
+
+          readinessProbe:
+            httpGet:
+              path: /tasks
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /tasks
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds:  20  
+
